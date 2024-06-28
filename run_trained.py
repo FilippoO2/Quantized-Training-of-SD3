@@ -2,7 +2,7 @@ import torch
 from diffusers import DiffusionPipeline
 import torch
 
-seed_value=69
+seed_value=42
 generator=torch.Generator().manual_seed(seed_value)
 
 pipe_id = "stabilityai/stable-diffusion-3-medium-diffusers"

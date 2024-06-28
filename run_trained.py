@@ -7,10 +7,10 @@ generator=torch.Generator().manual_seed(seed_value)
 
 pipe_id = "stabilityai/stable-diffusion-3-medium-diffusers"
 pipe = DiffusionPipeline.from_pretrained(pipe_id, torch_dtype=torch.float16).to("cuda")
-pipe.load_lora_weights("/home/ubuntu/trained_model_delete/", weight_name="model.safetensors",adapter_name="trained")
+pipe.load_lora_weights("/path/to/trained/model_dir", weight_name="model.safetensors",adapter_name="trained")
 pipe.fuse_lora(adapter_names=["trained"], lora_scale=0.9)
 
-prompt = "Back, left, right and front views of a toy droid"
+prompt = "PROMPT HERE"
 
 lora_scale = 0.9
 image = pipe(

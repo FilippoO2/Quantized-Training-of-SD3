@@ -12,7 +12,7 @@ pipe.fuse_lora(adapter_names=["trained"], lora_scale=0.9)
 
 prompt = "PROMPT HERE"
 
-lora_scale = 0.9
+
 image = pipe(
     prompt=prompt,
     negative_prompt="",

@@ -5,6 +5,12 @@ Adapted from [diffusers](https://github.com/huggingface/diffusers).
 
 Full guide available [here](https://medium.com/@filipposantiano/fine-tuning-stable-diffusion-3-medium-with-16gb-vram-36f4e0d084e7). 
 
+**Install GCC and G++ 9.5.0**
+
+```
+sudo apt-get install gcc-9 g++-9
+```
+
 **Install Conda**
 
 The first step is to ensure that you have Conda installed; I used the lightweight installer [Miniforge](https://github.com/conda-forge/miniforge).

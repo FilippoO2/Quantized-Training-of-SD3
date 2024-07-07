@@ -5,6 +5,14 @@ Adapted from [diffusers](https://github.com/huggingface/diffusers).
 
 Full guide available [here](https://medium.com/@filipposantiano/fine-tuning-stable-diffusion-3-medium-with-16gb-vram-36f4e0d084e7). 
 
+**Introduction**
+
+Stable Diffusion 3 (SD3) Medium is the most advanced text-to-image model that stability.ai has released. It’s smaller than other models, such as SDXL, yet still produces high-quality images, understands complex prompts and performs inference quickly. Despite its smaller size, fine-tuning SD3 Medium out of the box on a GPU with 16GB VRAM isn’t possible. GPUs with more than 16GB VRAM cost significantly more, whether you’re buying a GPU directly or using it through a cloud service.
+
+Fortunately, quantizing one of the text encoders can significantly reduce the memory used during fine-tuning, allowing for customisation on a 16GB VRAM GPU. This drastically reduces costs and increases the accessibility of model customisation. We also used LoRA (Low-Rank Adaptation of Large Language Models) to further reduce VRAM usage during fine-tuning.
+
+This repo provides you with all the files and steps needed to achieve this. For reference, I fine-tuned my model on a gd4n.2xlarge instance on AWS, which has one GPU (16GB VRAM) and 16 vCPUs (32GB RAM).
+
 **Install GCC and G++ 9.5.0**
 
 ```

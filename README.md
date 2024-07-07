@@ -8,7 +8,9 @@ Fortunately, quantizing one of the text encoders can significantly reduce the me
 
 This repo provides you with all the files and steps needed to achieve this. For reference, I fine-tuned my model on a gd4n.2xlarge instance on AWS, which has one GPU (16GB VRAM) and 16 vCPUs (32GB RAM).
 
-**Install GCC and G++ 9.5.0**
+**Install gcc and g++ 9.5.0**
+
+Make sure you have gcc and g++ installed. These are both part of the GNU compiler collection and are needed for compiling C++ and C programs.
 
 ```
 sudo apt-get install gcc-9 g++-9

@@ -1,9 +1,4 @@
 # Quantized-Training-of-SD3
-Quantized training of Stable Diffusion 3 Medium to significantly reduce memory usage.
-
-Adapted from [diffusers](https://github.com/huggingface/diffusers).
-
-Full guide available [here](https://medium.com/@filipposantiano/fine-tuning-stable-diffusion-3-medium-with-16gb-vram-36f4e0d084e7). 
 
 **Introduction**
 
@@ -113,3 +108,8 @@ python run_trained.py
 ```
 
 You can adjust the balance between the original and fine-tuned model by changing lora_scale. Increasing the value of the scale produces results more similar to the fine-tuned examples, whereas a lower scale value returns an image more similar to the base SD3 Medium output.
+
+
+Adapted from [diffusers](https://github.com/huggingface/diffusers).
+
+Full guide available [here](https://medium.com/@filipposantiano/fine-tuning-stable-diffusion-3-medium-with-16gb-vram-36f4e0d084e7).

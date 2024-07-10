@@ -8,6 +8,8 @@ Fortunately, quantizing one of the text encoders can significantly reduce the me
 
 This repo provides you with all the files and steps needed to achieve this. For reference, I fine-tuned my model on a gd4n.2xlarge instance on AWS, which has one GPU (16GB VRAM) and 16 vCPUs (32GB RAM).
 
+# Steps
+
 **Install gcc and g++ 9.5.0**
 
 Make sure you have gcc and g++ installed. These are both part of the GNU compiler collection and are needed for compiling C++ and C programs.
@@ -49,7 +51,7 @@ Note: If you have not used miniforge, the destination path will be slightly diff
 
 Head over to SD3 Medium on Hugging Face where you must create an account if you don't already have one and agree to the SD3 Medium license.
 
-Next, go to your profile settings in Hugging Face and select Access Tokens from the left menu. Create and copy a token, which you can then use to log in to Hugging Face through your terminal with the huggingface-cli login command. This should now be stored in ~/.cache/huggingface/token
+Next, go to your profile settings in Hugging Face and select Access Tokens from the left menu. Create and copy a token, which you can then use to log in to Hugging Face through your terminal with the `huggingface-cli login` command. This should now be stored in ~/.cache/huggingface/token
 
 **Configure Accelerate**
 
@@ -71,6 +73,8 @@ export INSTANCE_DIR="path/to/training_images"
 export OUTPUT_DIR="./fine_tuned_model"
 ```
 
+# Training with One Prompt
+
 We can now begin training! Make sure to change instance_prompt to the appropriate prompt for your images.
 
 ```
@@ -83,7 +87,7 @@ accelerate launch train_dreambooth_lora_sd3.py \
 --resolution=512 \
 --train_batch_size=4 \
 --gradient_accumulation_steps=4 \
---learning_rate=0.001 \
+--learning_rate=0.0001 \
 --report_to="wandb" \
 --lr_scheduler="constant" \
 --lr_warmup_steps=0 \
@@ -93,6 +97,35 @@ accelerate launch train_dreambooth_lora_sd3.py \
 --use_8bit_adam \
 --gradient_checkpointing \
 --prior_generation_precision="bf16"
+```
+
+# Training with Multiple Prompts
+
+Full guide for training with multiple prompts is available [here](https://medium.com/@filipposantiano/fine-tuning-stable-diffusion-3-with-multiple-prompts-on-a-gpu-with-16gb-vram-76d5a95bbba7).
+
+Once you have set up the training dataset in the appropriate format, run the following command to begin training.
+
+```
+accelerate launch train_multiple_prompts.py \
+--dataset_name="path/to/training_images" \
+--pretrained_model_name_or_path=${MODEL_NAME} \
+--output_dir=${OUTPUT_DIR} \
+--mixed_precision="bf16" \
+--resolution=512 \
+--train_batch_size=4 \
+--sample_batch_size=4 \
+--gradient_accumulation_steps=3 \
+--learning_rate=0.0001 \
+--report_to="wandb" \
+--lr_scheduler="constant" \
+--lr_warmup_steps=0 \
+--max_train_steps=2000 \
+--weighting_scheme="logit_normal" \
+--seed="42" \
+--use_8bit_adam \
+--gradient_checkpointing \
+--prior_generation_precision="bf16" \
+--caption_column="caption"
 ```
 
 **Running Inference**
@@ -109,7 +142,8 @@ You can now run inference with your new model (run_trained.py):
 python run_trained.py
 ```
 
-You can adjust the balance between the original and fine-tuned model by changing lora_scale. Increasing the value of the scale produces results more similar to the fine-tuned examples, whereas a lower scale value returns an image more similar to the base SD3 Medium output.
+You can adjust the balance between the original and fine-tuned model by changing `lora_scale` in `run_trained.py`. Increasing the value of the scale produces results more similar to the fine-tuned examples, whereas a lower scale value returns an image more similar to the base SD3 Medium output.
+
 
 
 Adapted from [diffusers](https://github.com/huggingface/diffusers).
